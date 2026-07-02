@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootRoutes } from '../Routes';
@@ -21,5 +20,3 @@ const RootNavigator = () => {
 };
 
 export default RootNavigator;
-
-const styles = StyleSheet.create({});

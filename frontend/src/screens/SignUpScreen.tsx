@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import React from 'react';
 
 const SignupScreen = () => {
@@ -10,5 +10,3 @@ const SignupScreen = () => {
 };
 
 export default SignupScreen;
-
-const styles = StyleSheet.create({});

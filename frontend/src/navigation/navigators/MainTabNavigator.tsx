@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MainRoutes } from '../Routes';
@@ -39,5 +38,3 @@ const MainTabNavigator = () => {
 };
 
 export default MainTabNavigator;
-
-const styles = StyleSheet.create({});
