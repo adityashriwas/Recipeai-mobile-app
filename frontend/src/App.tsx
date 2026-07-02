@@ -1,3 +1,4 @@
+import '../global.css'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { navigationRef, setIsNavigationReady } from './navigation/Navigation'
@@ -12,5 +13,3 @@ const App = () => {
 }
 
 export default App
-
-// const styles = StyleSheet.create({})
