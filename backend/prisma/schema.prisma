@@ -11,3 +11,69 @@ generator client {
 datasource db {
   provider = "mongodb"
 }
+
+model User {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  email     String @unique
+  password  String?
+  phone     String?
+  googleId  String?
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
+  orders    Order[]
+  addresses Address[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Address {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String @db.ObjectId
+  type          String
+  name          String
+  mobile        String
+  flatNo        String
+  street        String
+  landmark      String
+  buildingName  String
+  pincode       String
+  locality      String
+  user          User @relation(fields: [userId], references: [id])
+}
+
+model Order {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String @db.ObjectId
+  items           Json[]
+  totalAmout      Float
+  status          String @default("Pending")
+  address         Json
+  createdAt       DateTime @default(now())
+  user            User  @relation(fields: [userId], references: [id])
+  paymentMethod   String? @default("ONLINE")
+  paymentId       String?
+  razorPayOrderId String
+}
+
+model Category {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  imageUrl  String
+  products  Product[]
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  categoryId  String @db.ObjectId
+  name        String
+  price       Float
+  imageUrl    String?
+  description String?
+  category    Category @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime @default(now())
+}
