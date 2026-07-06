@@ -2,8 +2,12 @@ import { View, Text, TextInput, Pressable } from "react-native";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createCategory } from "../api/apiClient";
+import { useNavigation } from "@react-navigation/native";
 
 const AddCategoryScreen = () => {
+  const navigation = useNavigation();
   const {
     control,
     handleSubmit,
@@ -11,6 +15,22 @@ const AddCategoryScreen = () => {
   } = useForm<{ name: string; imageUrl?: string }>({
     defaultValues: { name: "", imageUrl: "" },
   });
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: ({ name, imageUrl }: { name: string; imageUrl?: string }) =>
+      createCategory({ name, imageUrl }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      navigation.goBack();
+    },
+  });
+
+  const onSubmit = (data: { name: string; imageUrl?: string }) =>
+    mutation.mutate({
+      name: data?.name,
+      imageUrl: data?.imageUrl || undefined,
+    });
+
   return (
     <View className="flex-1 bg-gray-50 p-4">
       <Text className="text-lg font-bold text-gray-900 mb-2">
@@ -66,7 +86,7 @@ const AddCategoryScreen = () => {
       )}
 
       <Pressable
-        onPress={handleSubmit}
+        onPress={handleSubmit(onSubmit)}
         className="mt-6 bg-black py-3 rounded-lg flex-row justify-center items-center"
       >
         <Ionicons name="save" size={18} color={"#fff"} />
