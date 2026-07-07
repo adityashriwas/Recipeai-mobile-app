@@ -35,20 +35,31 @@ const CategoriesScreen = () => {
       Alert.alert("Error", `Failed to delete category ${error.message}`),
   });
 
-  const handleDelete = (id:string, name:string, productCount:number) => {
-    const message = productCount > 0 ? `Are you sure you want to delete ${name}? This will also delete it's ${productCount} product${productCount > 1 ? 's' : ''}` : `Are you sure you want to delete ${name} category`;
+  const handleDelete = (id: string, name: string, productCount: number) => {
+    const message =
+      productCount > 0
+        ? `Are you sure you want to delete ${name}? This will also delete it's ${productCount} product${productCount > 1 ? "s" : ""}`
+        : `Are you sure you want to delete ${name} category`;
     Alert.alert("Delete Category", message, [
-      {text: "Cancel", style: "cancel"},
+      { text: "Cancel", style: "cancel" },
       {
         text: "Delete",
         style: "destructive",
         onPress: () => deleteMutation.mutate(id),
-      }
-    ])
-  }
+      },
+    ]);
+  };
 
   const renderCategory = ({ item }: { item: Category }) => (
-    <TouchableOpacity className="bg-white rounded-xl p-4 mx-3 mt-2 flex-row items-center shadow">
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Products", {
+          categoryId: item?.id,
+          categoryName: item?.name,
+        })
+      }
+      className="bg-white rounded-xl p-4 mx-3 mt-2 flex-row items-center shadow"
+    >
       <Image
         className="w-14 h-14 rounded-lg mr-4 bg-gray-100"
         source={{
@@ -60,7 +71,9 @@ const CategoriesScreen = () => {
         }}
       />
       <View className="flex-1">
-        <Text className="text-base font-semibold text-gray-800">{item.name}</Text>
+        <Text className="text-base font-semibold text-gray-800">
+          {item.name}
+        </Text>
         <Text className="text-xs text-gray-500 mt-1">
           {(item?.products?.length ?? 0) +
             "product" +
@@ -69,11 +82,24 @@ const CategoriesScreen = () => {
       </View>
 
       <View className="flex-row items-center gap-2">
-        <TouchableOpacity className="p-2 rounded-md mr-2 bg-blue-50">
-          <Ionicons name="pencil" size={18} color={"2563EB"}/>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("EditCategory", {
+              categoryId: item.id,
+              categoryName: item?.name,
+            })
+          }
+          className="p-2 rounded-md mr-2 bg-blue-50"
+        >
+          <Ionicons name="pencil" size={18} color={"2563EB"} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleDelete(item?.id, item?.name, item?.products.length ?? 0)} className="p-2 rounded-md bg-red-50">
-          <Ionicons name="trash" size={18} color={"D62626"}/>
+        <TouchableOpacity
+          onPress={() =>
+            handleDelete(item?.id, item?.name, item?.products.length ?? 0)
+          }
+          className="p-2 rounded-md bg-red-50"
+        >
+          <Ionicons name="trash" size={18} color={"D62626"} />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

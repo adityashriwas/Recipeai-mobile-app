@@ -40,3 +40,6 @@ export const createProduct = async (data: {
   imageUrl?: string;
   description?: string;
 }) => (await api.post("/products", data)).data;
+
+export const deleteProduct = async (id: string) =>
+  (await api.delete(`/products/${id}`)).data;
