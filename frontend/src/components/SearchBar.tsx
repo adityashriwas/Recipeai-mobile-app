@@ -9,7 +9,7 @@ export default function SearchBar({
   onChange?: (v: string) => void;
 }) {
   return (
-    <View className='bg-white rounded-full h-12 flex-row items-center px-4 shadow'>
+    <View className="bg-white rounded-full h-12 flex-row items-center px-4 shadow">
       <FontAwesome name="search" size={16} color={'#9CA3AF'} />
       <TextInput
         value={value}

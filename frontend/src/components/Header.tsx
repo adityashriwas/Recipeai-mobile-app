@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <View className="px-4 pb-4 rounded-b-2x">
       <Text className="text-white text-sm">Delivery starting in</Text>
-      <View className='flex-row items-end justify-between mt-1'>
+      <View className="flex-row items-end justify-between mt-1">
         <View>
           <Text className="text-white text-3xl font-extrabold">
             15 minutes ⚡️
@@ -27,7 +27,7 @@ const Header = () => {
           </View>
         </View>
 
-        <View className='flex-row items-center gap-2'>
+        <View className="flex-row items-center gap-2">
           <Pressable>
             <Ionicons name="heart-outline" size={22} color={'#fff'} />
           </Pressable>
